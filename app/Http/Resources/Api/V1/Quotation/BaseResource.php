@@ -18,7 +18,7 @@ class BaseResource extends JsonResource
 
         return [
             'total'        => $quotation->total,
-            'currency_id'  => $quotation->quotation_id,
+            'currency_id'  => $quotation->currency_id,
             'quotation_id' => $quotation->id,
         ];
     }
