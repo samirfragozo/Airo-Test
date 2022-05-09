@@ -20,9 +20,7 @@
             });
 
             $(document).ready(function () {
-                let form = '#quotation';
-
-                $(form).on('submit', function (event) {
+                $('#quotation').on('submit', function (event) {
                     event.preventDefault();
 
                     let url = $(this).attr('data-action');
@@ -35,14 +33,19 @@
                         contentType: false,
                         cache:       false,
                         processData: false,
-                        success:     function (response) {
-                            $(form).trigger('reset');
-                            alert(response.success);
+                        beforeSend:  function () {
+                            $('#results').addClass('hidden');
                         },
-                        error:       function (response) {
-                            alert(response.message);
-                        },
-                    });
+                    })
+                        .done(function ({data}) {
+                            $('#results').removeClass('hidden');
+                            $('#total').val(data.total);
+                            $('#currency').val(data.currency_id);
+                            $('#quotation_id').val(data.quotation_id);
+                        })
+                        .fail(function () {
+                            alert('error');
+                        });
                 });
 
             });
@@ -81,7 +84,7 @@
 
                         <label for="currency_id" class="form-label">Currency</label>
                         <div class="input-group mb-3">
-                            <select class="form-select" name="currency_id" id="currency_id">
+                            <select aria-label="Currency" class="form-select" id="currency_id" name="currency_id">
                                 <option value="EUR" selected>Euro</option>
                                 <option value="GBP">Pound sterling</option>
                                 <option value="USD">United States Dollar</option>
@@ -113,6 +116,27 @@
 
                         <button type="submit" class="btn btn-primary">Calculate</button>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 hidden" id="results">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <label for="total" class="form-label">Total</label>
+                    <div class="input-group mb-3">
+                        <input aria-label="Total" class="form-control" id="total" type="text" disabled>
+                    </div>
+
+                    <label for="currency" class="form-label">Currency</label>
+                    <div class="input-group mb-3">
+                        <input aria-label="Currency" class="form-control" id="currency" type="text" disabled>
+                    </div>
+
+                    <label for="quotation_id" class="form-label">Quotation ID</label>
+                    <div class="input-group mb-3">
+                        <input aria-label="Quotation ID" class="form-control" id="quotation_id" type="text" disabled>
+                    </div>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class QuotationController extends Controller
 {
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): BaseResource
     {
         $total      = 0;
         $fixedRate  = Quotation::FIXED_RATE;
