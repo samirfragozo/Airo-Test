@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Quotation;
 
+use App\Constants\RequestKeys;
 use App\Models\Quotation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,9 +18,9 @@ class BaseResource extends JsonResource
         $quotation = $this->resource;
 
         return [
-            'total'        => $quotation->total,
-            'currency_id'  => $quotation->currency_id,
-            'quotation_id' => $quotation->id,
+            RequestKeys::TOTAL        => $quotation->total,
+            RequestKeys::CURRENCY_ID  => $quotation->currency_id,
+            RequestKeys::QUOTATION_ID => $quotation->id,
         ];
     }
 }
